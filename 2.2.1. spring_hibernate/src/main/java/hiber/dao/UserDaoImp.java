@@ -33,11 +33,8 @@ public class UserDaoImp implements UserDao {
       String hql = "SELECT u FROM User u JOIN u.car c WHERE c.model = :carModel AND c.series = :series";
 
       try (Session session = sessionFactory.openSession()) {
-         session.beginTransaction();
          Query query = session.createQuery(hql).setParameter("carModel", carModel).setParameter("series", series);
-         User user = (User) query.getSingleResult();
-         session.getTransaction().commit();
-         return user;
+         return (User) query.getSingleResult();
       } catch (Exception e) {
          e.printStackTrace();
       }
